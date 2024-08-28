@@ -1,7 +1,6 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 
-
 # initialize Chrome and set element waiting time to 5 sec
 wd = webdriver.Chrome()
 wd.implicitly_wait(5)
