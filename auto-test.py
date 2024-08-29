@@ -1,11 +1,13 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 
 
 # Initialize Chrome object
 wd = webdriver.Chrome()
 wd.implicitly_wait(5)
-wd.get('http://127.0.0.1')
+wd.get('http://127.0.0.1:80')
 
 # UI-0001
 # # Find the password input frame
@@ -122,6 +124,40 @@ wd.get('http://127.0.0.1')
 #     print(wd.switch_to.alert.text)
 
 # UI-0101
+# # Find 'username' input box and input 'byh'
+# username = wd.find_element(By.CSS_SELECTOR, 'input#username')
+# username.clear()
+# username.send_keys('byhy')
+#
+# # Find the password input box
+# password = wd.find_element(By.CSS_SELECTOR, 'input#password')
+# password.clear()
+# password.send_keys('88888888')
+#
+# # Click '登陆‘ button
+# wd.find_element(By.TAG_NAME, 'button').click()
+#
+# # Find sidebar
+# sidebar = wd.find_elements(By.CSS_SELECTOR, 'section.sidebar > ul  > li > a[href] ')
+#
+# # Get the first 3 item
+# target_order = ['客户', '药品', '菜单']
+# current_ordr = []
+#
+# for item in sidebar:
+#     print(item.get_attribute('innerText'))
+#     current_ordr.append(item)
+#
+# current_ordr = current_ordr[:3]
+#
+# # Assert the current order
+# if current_ordr == target_order:
+#     print('UI-0101: PASS')
+#
+# else:
+#     print(current_ordr)
+
+# UI-0102
 # Find 'username' input box and input 'byh'
 username = wd.find_element(By.CSS_SELECTOR, 'input#username')
 username.clear()
@@ -135,23 +171,31 @@ password.send_keys('88888888')
 # Click '登陆‘ button
 wd.find_element(By.TAG_NAME, 'button').click()
 
-# Find sidebar
-sidebar = wd.find_elements(By.CSS_SELECTOR, 'section.sidebar > ul  > li > a[href] ')
+# Find '添加客户‘ button, and click
+wd.find_element(By.CSS_SELECTOR, 'button > span.glyphicon').click()
 
-# Get the first 3 item
-target_order = ['客户', '药品', '菜单']
-current_ordr = []
+# Find the '客户名'
+account_name = wd.find_element(By.CSS_SELECTOR, '.col-lg-8.col-md-8.col-sm-8 > div:nth-child(1) > input')
+account_name.click()
+account_name.send_keys('南京中医院')
 
-for item in sidebar:
-    print(item.get_attribute('innerText'))
-    current_ordr.append(item)
+# Find the '联系电话'
+number = wd.find_element(By.CSS_SELECTOR, '.col-lg-8.col-md-8.col-sm-8 > div:nth-child(2) > input')
+number.click()
+number.send_keys('10111112222')
 
-current_ordr = current_ordr[:3]
+# Find '地址'
+address = wd.find_element(By.CSS_SELECTOR, '.col-lg-8.col-md-8.col-sm-8 > div:nth-child(3) > textarea')
+address.click()
+address.send_keys('南京雨花区长安路88号')
 
-# Assert the current order
-if current_ordr == target_order:
-    print('UI-0101: PASS')
+# click '创建'
+wd.find_element(By.CSS_SELECTOR, '.add-one-area > div > button:nth-child(1)').click()
 
-else:
-    print(current_ordr)
-
+# Add assertion
+try:
+    # Add assertion
+    assert '南京中医院' in wd.page_source
+    print('UI-0102：PASS')
+except AssertionError:
+    print('UI-0102: Failed')
