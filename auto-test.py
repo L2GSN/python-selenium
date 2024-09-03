@@ -1,7 +1,5 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
 
 
 # Initialize Chrome object
@@ -123,7 +121,7 @@ wd.get('http://127.0.0.1:80')
 # else:
 #     print(wd.switch_to.alert.text)
 
-# UI-0101
+# UI-0101 || NOT resolve, CAN NOT ger text of list object
 # # Find 'username' input box and input 'byh'
 # username = wd.find_element(By.CSS_SELECTOR, 'input#username')
 # username.clear()
@@ -137,28 +135,58 @@ wd.get('http://127.0.0.1:80')
 # # Click '登陆‘ button
 # wd.find_element(By.TAG_NAME, 'button').click()
 #
-# # Find sidebar
-# sidebar = wd.find_elements(By.CSS_SELECTOR, 'section.sidebar > ul  > li > a[href] ')
+# # Find the first 3 items in sidebar
+# customer = wd.find_elements(By.CSS_SELECTOR, 'a[href = "#/customers"] > a > span')
+# medicine = wd.find_elements(By.CSS_SELECTOR, 'a[href = "#/medicines"]')
+# order = wd.find_elements(By.CSS_SELECTOR, 'a[href = "#/orders"]')
 #
-# # Get the first 3 item
-# target_order = ['客户', '药品', '菜单']
-# current_ordr = []
-#
-# for item in sidebar:
-#     print(item.get_attribute('innerText'))
-#     current_ordr.append(item)
-#
-# current_ordr = current_ordr[:3]
-#
-# # Assert the current order
-# if current_ordr == target_order:
-#     print('UI-0101: PASS')
-#
-# else:
-#     print(current_ordr)
+# print(customer.text)
 
 # UI-0102
-# Find 'username' input box and input 'byh'
+# # Find 'username' input box and input 'byhy'
+# username = wd.find_element(By.CSS_SELECTOR, 'input#username')
+# username.clear()
+# username.send_keys('byhy')
+#
+# # Find the password input box
+# password = wd.find_element(By.CSS_SELECTOR, 'input#password')
+# password.clear()
+# password.send_keys('88888888')
+#
+# # Click '登陆‘ button
+# wd.find_element(By.TAG_NAME, 'button').click()
+#
+# # Find '添加客户‘ button, and click
+# wd.find_element(By.CSS_SELECTOR, 'button > span.glyphicon').click()
+#
+# # Find the '客户名'
+# account_name = wd.find_element(By.CSS_SELECTOR, '.col-lg-8.col-md-8.col-sm-8 > div:nth-child(1) > input')
+# account_name.click()
+# account_name.send_keys('南京中医院')
+#
+# # Find the '联系电话'
+# number = wd.find_element(By.CSS_SELECTOR, '.col-lg-8.col-md-8.col-sm-8 > div:nth-child(2) > input')
+# number.click()
+# number.send_keys('10111112222')
+#
+# # Find '地址'
+# address = wd.find_element(By.CSS_SELECTOR, '.col-lg-8.col-md-8.col-sm-8 > div:nth-child(3) > textarea')
+# address.click()
+# address.send_keys('南京雨花区长安路88号')
+#
+# # click '创建'
+# wd.find_element(By.CSS_SELECTOR, '.add-one-area > div > button:nth-child(1)').click()
+#
+# # Add assertion
+# try:
+#     # Add assertion
+#     assert '南京中医院' in wd.page_source
+#     print('UI-0102：PASS')
+# except AssertionError:
+#     print('UI-0102: Failed')
+
+# UI-0103
+# Find 'username' input box and input 'byhy'
 username = wd.find_element(By.CSS_SELECTOR, 'input#username')
 username.clear()
 username.send_keys('byhy')
@@ -171,31 +199,30 @@ password.send_keys('88888888')
 # Click '登陆‘ button
 wd.find_element(By.TAG_NAME, 'button').click()
 
-# Find '添加客户‘ button, and click
-wd.find_element(By.CSS_SELECTOR, 'button > span.glyphicon').click()
+# Select search box and click, send keys '南京中医院'
+search_box = wd.find_element(By.CSS_SELECTOR, 'div.input-group > input')
+search_box.click()
+search_box.send_keys('南京中医院\n')
 
-# Find the '客户名'
-account_name = wd.find_element(By.CSS_SELECTOR, '.col-lg-8.col-md-8.col-sm-8 > div:nth-child(1) > input')
-account_name.click()
-account_name.send_keys('南京中医院')
 
-# Find the '联系电话'
-number = wd.find_element(By.CSS_SELECTOR, '.col-lg-8.col-md-8.col-sm-8 > div:nth-child(2) > input')
-number.click()
-number.send_keys('10111112222')
+# select result-item 1, click '编辑' button
+wd.find_element(By.CSS_SELECTOR, '.search-result-item:nth-of-type(3)  label:nth-child(1)').click()
 
-# Find '地址'
-address = wd.find_element(By.CSS_SELECTOR, '.col-lg-8.col-md-8.col-sm-8 > div:nth-child(3) > textarea')
-address.click()
-address.send_keys('南京雨花区长安路88号')
+# change to target text
+target_text = '南京省中医院'
+account_name = wd.find_element(By.CSS_SELECTOR, '.search-result-item:nth-of-type(3) input[value = "南京中医院"] ')
+account_name.clear()
+account_name.send_keys(target_text)
 
-# click '创建'
-wd.find_element(By.CSS_SELECTOR, '.add-one-area > div > button:nth-child(1)').click()
+# click '确定' button
+wd.find_element(By.CSS_SELECTOR, '.search-result-item:nth-of-type(3)  label[type = "button"]:nth-child(1) ').click()
 
-# Add assertion
+# Add assertion - need to modify
 try:
     # Add assertion
-    assert '南京中医院' in wd.page_source
-    print('UI-0102：PASS')
+    assert '南京省中医院' in wd.page_source
+    print('UI-0103：PASS')
 except AssertionError:
-    print('UI-0102: Failed')
+    print('UI-0103: Failed')
+
+# UI-0104
