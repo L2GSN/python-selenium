@@ -186,43 +186,90 @@ wd.get('http://127.0.0.1:80')
 #     print('UI-0102: Failed')
 
 # UI-0103
-# Find 'username' input box and input 'byhy'
-username = wd.find_element(By.CSS_SELECTOR, 'input#username')
-username.clear()
-username.send_keys('byhy')
+# # Find 'username' input box and input 'byhy'
+# username = wd.find_element(By.CSS_SELECTOR, 'input#username')
+# username.clear()
+# username.send_keys('byhy')
+#
+# # Find the password input box
+# password = wd.find_element(By.CSS_SELECTOR, 'input#password')
+# password.clear()
+# password.send_keys('88888888')
+#
+# # Click '登陆‘ button
+# wd.find_element(By.TAG_NAME, 'button').click()
+#
+# # Select search box and click, send keys '南京中医院'
+# search_box = wd.find_element(By.CSS_SELECTOR, 'div.input-group > input')
+# search_box.click()
+# search_box.send_keys('南京中医院\n')
+#
+#
+# # select result-item 1, click '编辑' button
+# wd.find_element(By.CSS_SELECTOR, '.search-result-item:nth-of-type(3)  label:nth-child(1)').click()
+#
+# # change to target text
+# target_text = '南京省中医院'
+# account_name = wd.find_element(By.CSS_SELECTOR,
+#                                '.search-result-item:nth-of-type(3) input[value = "南京中医院"] ')
+# account_name.clear()
+# account_name.send_keys(target_text)
+#
+# # click '确定' button
+# wd.find_element(By.CSS_SELECTOR,
+#                 '.search-result-item:nth-of-type(3)  label[type = "button"]:nth-child(1) ').click()
+#
+# # Add assertion
+# try:
+#     # Add assertion
+#     assert '南京省中医院' in wd.page_source
+#     print('UI-0103：PASS')
+# except AssertionError:
+#     print('UI-0103: Failed')
 
-# Find the password input box
-password = wd.find_element(By.CSS_SELECTOR, 'input#password')
-password.clear()
-password.send_keys('88888888')
-
-# Click '登陆‘ button
-wd.find_element(By.TAG_NAME, 'button').click()
-
-# Select search box and click, send keys '南京中医院'
-search_box = wd.find_element(By.CSS_SELECTOR, 'div.input-group > input')
-search_box.click()
-search_box.send_keys('南京中医院\n')
-
-
-# select result-item 1, click '编辑' button
-wd.find_element(By.CSS_SELECTOR, '.search-result-item:nth-of-type(3)  label:nth-child(1)').click()
-
-# change to target text
-target_text = '南京省中医院'
-account_name = wd.find_element(By.CSS_SELECTOR, '.search-result-item:nth-of-type(3) input[value = "南京中医院"] ')
-account_name.clear()
-account_name.send_keys(target_text)
-
-# click '确定' button
-wd.find_element(By.CSS_SELECTOR, '.search-result-item:nth-of-type(3)  label[type = "button"]:nth-child(1) ').click()
-
-# Add assertion - need to modify
-try:
-    # Add assertion
-    assert '南京省中医院' in wd.page_source
-    print('UI-0103：PASS')
-except AssertionError:
-    print('UI-0103: Failed')
-
-# UI-0104
+# UI-0105
+# # Find 'username' input box and input 'byhy'
+# username = wd.find_element(By.CSS_SELECTOR, 'input#username')
+# username.clear()
+# username.send_keys('byhy')
+#
+# # Find the password input box
+# password = wd.find_element(By.CSS_SELECTOR, 'input#password')
+# password.clear()
+# password.send_keys('88888888')
+#
+# # Click '登陆‘ button
+# wd.find_element(By.TAG_NAME, 'button').click()
+#
+# # switch to medicine page
+# wd.get('http://127.0.0.1/mgr/#/medicines')
+#
+# # Click '添加客户'
+# wd.find_element(By.CSS_SELECTOR, '.col-lg-12 > button').click()
+#
+# # Find the '药品名称'
+# medicine_name = wd.find_element(By.CSS_SELECTOR, '.col-lg-8.col-md-8.col-sm-8 > div:nth-child(1) > input')
+# medicine_name.click()
+# medicine_name.send_keys('测试药品名-青霉素注射液')
+#
+# # Find the '编号'
+# number = wd.find_element(By.CSS_SELECTOR, '.col-lg-8.col-md-8.col-sm-8 > div:nth-child(2) > input')
+# number.click()
+# number.send_keys('Test-QMS02003')
+#
+# # Find '描述'
+# description = wd.find_element(By.CSS_SELECTOR, '.col-lg-8.col-md-8.col-sm-8 > div:nth-child(3) > textarea')
+# description.click()
+# description.send_keys('测试描述一种光谱抗生素，用于多种炎症反应')
+#
+# # click '创建'
+# wd.find_element(By.CSS_SELECTOR, '.add-one-area > div > button:nth-child(1)').click()
+#
+# # Assertion
+#
+# try:
+#     # Add assertion
+#     assert '测试药品名' in wd.page_source
+#     print('UI-0105：PASS')
+# except AssertionError:
+#     print('UI-0105: Failed')
