@@ -7,7 +7,7 @@ wd = webdriver.Chrome()
 wd.implicitly_wait(5)
 wd.get('http://127.0.0.1:80')
 
-# UI-0001
+# # UI-0001
 # # Find the password input frame
 # element = wd.find_element(By.CSS_SELECTOR, 'input#password')
 #
@@ -25,10 +25,10 @@ wd.get('http://127.0.0.1:80')
 #
 # else:
 #     print(wd.switch_to.alert.text)
-
-# UI-0002
+#
+# # UI-0002
 # # Find 'username' input box and clear content
-# element = wd.find_element(By.CSS_SELECTOR,'input#username')
+# element = wd.find_element(By.CSS_SELECTOR, 'input#username')
 # element.clear()
 #
 # element.send_keys('byhy')
@@ -48,8 +48,8 @@ wd.get('http://127.0.0.1:80')
 #
 # else:
 #     print(wd.switch_to.alert.text)
-
-# UI-0003
+#
+# # UI-0003
 # # Find 'username' input box and input 'byh'
 # element = wd.find_element(By.CSS_SELECTOR, 'input#username')
 # element.clear()
@@ -72,10 +72,10 @@ wd.get('http://127.0.0.1:80')
 #
 # else:
 #     print(wd.switch_to.alert.text)
-
-# UI-0004
+#
+# # UI-0004
 # # Find 'username' input box and input 'byh'
-# element = wd.find_element(By.CSS_SELECTOR,'input#username')
+# element = wd.find_element(By.CSS_SELECTOR, 'input#username')
 # element.clear()
 # element.send_keys('byhy')
 #
@@ -96,10 +96,10 @@ wd.get('http://127.0.0.1:80')
 #
 # else:
 #     print(wd.switch_to.alert.text)
-
-# UI-0005
+#
+# # UI-0005
 # # Find 'username' input box and input 'byh'
-# element = wd.find_element(By.CSS_SELECTOR,'input#username')
+# element = wd.find_element(By.CSS_SELECTOR, 'input#username')
 # element.clear()
 # element.send_keys('byhy')
 #
@@ -122,27 +122,36 @@ wd.get('http://127.0.0.1:80')
 #     print(wd.switch_to.alert.text)
 
 # UI-0101 || NOT resolve, CAN NOT ger text of list object
-# # Find 'username' input box and input 'byh'
-# username = wd.find_element(By.CSS_SELECTOR, 'input#username')
-# username.clear()
-# username.send_keys('byhy')
-#
-# # Find the password input box
-# password = wd.find_element(By.CSS_SELECTOR, 'input#password')
-# password.clear()
-# password.send_keys('88888888')
-#
-# # Click '登陆‘ button
-# wd.find_element(By.TAG_NAME, 'button').click()
-#
-# # Find the first 3 items in sidebar
-# customer = wd.find_elements(By.CSS_SELECTOR, 'a[href = "#/customers"] > a > span')
-# medicine = wd.find_elements(By.CSS_SELECTOR, 'a[href = "#/medicines"]')
-# order = wd.find_elements(By.CSS_SELECTOR, 'a[href = "#/orders"]')
-#
-# print(customer.text)
+# Find 'username' input box and input 'byh'
+username = wd.find_element(By.CSS_SELECTOR, 'input#username')
+username.clear()
+username.send_keys('byhy')
 
-# UI-0102
+# Find the password input box
+password = wd.find_element(By.CSS_SELECTOR, 'input#password')
+password.clear()
+password.send_keys('88888888')
+
+# Click '登陆‘ button
+wd.find_element(By.TAG_NAME, 'button').click()
+
+# Find the first 3 items in sidebar
+sidebar = wd.find_elements(By.CSS_SELECTOR, 'ul.sidebar-menu li')
+firs_3 = sidebar[1:4]
+target_list = ['客户', '药品', '订单']
+
+for item in firs_3:
+    print(item.get_attribute('innerText'))
+
+# try:
+#     assert firs_3 == target_list
+#     print('UI-0101: Pass')
+#
+# except AssertionError:
+#     print('UI-0101: Failed')
+
+
+# # UI-0102
 # # Find 'username' input box and input 'byhy'
 # username = wd.find_element(By.CSS_SELECTOR, 'input#username')
 # username.clear()
@@ -184,8 +193,8 @@ wd.get('http://127.0.0.1:80')
 #     print('UI-0102：PASS')
 # except AssertionError:
 #     print('UI-0102: Failed')
-
-# UI-0103
+#
+# # UI-0103
 # # Find 'username' input box and input 'byhy'
 # username = wd.find_element(By.CSS_SELECTOR, 'input#username')
 # username.clear()
@@ -273,3 +282,58 @@ wd.get('http://127.0.0.1:80')
 #     print('UI-0105：PASS')
 # except AssertionError:
 #     print('UI-0105: Failed')
+
+# # UI-0106
+# # Find 'username' input box and input 'byhy'
+# username = wd.find_element(By.CSS_SELECTOR, 'input#username')
+# username.clear()
+# username.send_keys('byhy')
+#
+# # Find the password input box
+# password = wd.find_element(By.CSS_SELECTOR, 'input#password')
+# password.clear()
+# password.send_keys('88888888')
+#
+# # Click '登陆‘ button
+# wd.find_element(By.TAG_NAME, 'button').click()
+#
+# # Click jump link
+# wd.find_element(By.CSS_SELECTOR, 'footer > div:nth-child(1) > a').click()
+#
+# # Get current handle
+# current = wd.current_window_handle
+#
+# # Switch to target/teaching website
+# for handle in wd.window_handles:
+#     # Switch to a window
+#     wd.switch_to.window(handle)
+#     # grab the title and check if match with target
+#     if '月黑' in wd.title:
+#         # if true, break
+#         break
+#
+# # Find elements in header
+# header = wd.find_elements(By.CSS_SELECTOR, 'nav > nav:nth-child(3) li > a')
+#
+# # Print text
+# # for item in header:
+# #     print(item.get_attribute('textContent'))
+#
+# # Back to byhySMS
+# wd.switch_to.window(current)
+#
+# # Click log out
+#
+# wd.find_element(By.CSS_SELECTOR, '.dropdown.user').click()
+# wd.find_element(By.CSS_SELECTOR, '.user-footer > div.pull-right').click()
+#
+# log_msg = '输入用户名、密码登录'
+#
+# try:
+#     assert log_msg in wd.page_source
+#     print('UI-0106: Pass')
+# except AssertionError:
+#     print('UI-0106: Failed')
+
+# quit
+wd.quit()
