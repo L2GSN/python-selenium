@@ -1,5 +1,6 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
+from selenium.common.exceptions import NoSuchElementException
 
 
 # login
@@ -36,6 +37,32 @@ def add_item(islist):
 
         # click '创建'
         wd.find_element(By.CSS_SELECTOR, '.add-one-area > div > button:nth-child(1)').click()
+
+
+def remove_item(item='order'):
+    """delete existed item"""
+
+    # select delete button
+    if item == 'order':
+        btn_select = 'div.btn-group'
+    else:
+        btn_select = 'div.btn-group > label:nth-child(2)'
+
+    while True:
+        # check search-results in page content
+        try:
+            wd.execute_script('location.reload()')
+            wd.find_element(By.CSS_SELECTOR, '.search-result-item:nth-child(3)')
+
+            # button position
+            results = wd.find_elements(By.CSS_SELECTOR, btn_select)
+            # delete item
+            for result in results:
+                result.click()
+                wd.switch_to.alert.accept()
+
+        except NoSuchElementException:
+            break
 
 
 # Initialize Chrome object
@@ -401,6 +428,83 @@ wd.get('http://127.0.0.1:80')
 #
 # except AssertionError:
 #     print('UI-0107: Failed')
+
+# UI-0108
+login()
+
+# Change to order page, remove all items
+wd.find_element(By.CSS_SELECTOR, 'a[href = "#/orders"]').click()
+remove_item()
+
+# Change to customer page, remove all items
+wd.find_element(By.CSS_SELECTOR, 'a[href = "#/customers"]').click()
+remove_item('customers')
+
+# Change to medicine page, remove all items
+wd.find_element(By.CSS_SELECTOR, 'a[href = "#/medicines"]').click()
+remove_item('medicines')
+
+# Add medicines
+med_list = [
+    ['青霉素盒装1', 'YP-32342341', '青霉素注射液，每支15ml，20支装'],
+    ['青霉素盒装2', 'YP-32342342', '青霉素注射液，每支15ml，30支装'],
+    ['青霉素盒装3', 'YP-32342343', '青霉素注射液，每支15ml，40支装']
+            ]
+
+# Click '添加药品'
+wd.find_element(By.CSS_SELECTOR, 'a[href = "#/medicines"]').click()
+wd.find_element(By.CSS_SELECTOR, '.col-lg-12 > button').click()
+add_item(med_list)
+
+# Add customers
+cus_list = [
+    ['南京中医院1', '2551867851', '江苏省-南京市-秦淮区-汉中路-501'],
+    ['南京中医院2', '2551867852', '江苏省-南京市-秦淮区-汉中路-502'],
+    ['南京中医院3', '2551867853', '江苏省-南京市-秦淮区-汉中路-503']
+            ]
+
+# Find '添加客户‘ button, and click
+wd.find_element(By.CSS_SELECTOR, 'a[href = "#/customers"]').click()
+wd.find_element(By.CSS_SELECTOR, 'button > span.glyphicon').click()
+add_item(cus_list)
+
+# Add orders
+wd.find_element(By.CSS_SELECTOR, 'a[href = "#/orders"]').click()
+
+# Click '添加订单'
+wd.find_element(By.CSS_SELECTOR, '.col-lg-12 > button').click()
+
+# Find the '订单名称'
+wd.find_element(By.CSS_SELECTOR, '.col-lg-8.col-md-8.col-sm-8 > div:nth-child(1) > input').send_keys('Test-01')
+
+# Find the '客户'
+customer = wd.find_element(By.CSS_SELECTOR, '.col-lg-8.col-md-8.col-sm-8 > div:nth-child(2) > input')
+customer.click()
+customer.send_keys('2\n')
+wd.find_element(By.CSS_SELECTOR, '.col-lg-8.col-md-8.col-sm-8 > div:nth-child(2) .xxx > option:nth-child(1)').click()
+
+
+# Find '药品'
+medicine = wd.find_element(By.CSS_SELECTOR, '.col-lg-8.col-md-8.col-sm-8 > div:nth-child(3) > input')
+medicine.click()
+medicine.send_keys('1\n')
+wd.find_element(By.CSS_SELECTOR, '.col-lg-8.col-md-8.col-sm-8 > div:nth-child(3) .xxx > option:nth-child(1)').click()
+
+# input number of medicine
+number = wd.find_element(By.CSS_SELECTOR, '.col-lg-8.col-md-8.col-sm-8 > div:nth-child(3) > div> input')
+number.click()
+number.send_keys('100\n')
+
+# Click '创建'
+wd.find_element(By.CSS_SELECTOR, '.add-one-area > div > button:nth-child(1)').click()
+
+# Assertion
+try:
+    assert 'Test-01' in wd.page_source
+    print('UI-0108: Pass')
+
+except AssertionError:
+    print('UI-0108: Failed')
 
 # quit
 wd.quit()
