@@ -2,6 +2,43 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 
 
+# login
+def login():
+    """login bu=yhySMS"""
+
+    # Find 'username' input box and input 'byhy'
+    wd.find_element(By.CSS_SELECTOR, 'input#username').clear()
+    wd.find_element(By.CSS_SELECTOR, 'input#username').send_keys('byhy')
+
+    # Find the password input box
+    wd.find_element(By.CSS_SELECTOR, 'input#password').clear()
+    wd.find_element(By.CSS_SELECTOR, 'input#password').send_keys('88888888')
+
+    # Click '登陆‘ button
+    wd.find_element(By.TAG_NAME, 'button').click()
+
+
+def add_item(islist):
+    """add item in to frame"""
+
+    for item in islist:
+        # Find the 'input 1'
+        wd.find_element(By.CSS_SELECTOR, '.col-lg-8.col-md-8.col-sm-8 > div:nth-child(1) > input').click()
+        wd.find_element(By.CSS_SELECTOR, '.col-lg-8.col-md-8.col-sm-8 > div:nth-child(1) > input').send_keys(item[0])
+
+        # Find the 'input2'
+        wd.find_element(By.CSS_SELECTOR, '.col-lg-8.col-md-8.col-sm-8 > div:nth-child(2) > input').click()
+        wd.find_element(By.CSS_SELECTOR, '.col-lg-8.col-md-8.col-sm-8 > div:nth-child(2) > input').send_keys(item[1])
+
+        # Find 'input3'
+        wd.find_element(By.CSS_SELECTOR, '.col-lg-8.col-md-8.col-sm-8 > div:nth-child(3) > textarea').click()
+        wd.find_element(By.CSS_SELECTOR, '.col-lg-8.col-md-8.col-sm-8 > div:nth-child(3) > textarea').send_keys(item[2])
+
+        # click '创建'
+        wd.find_element(By.CSS_SELECTOR, '.add-one-area > div > button:nth-child(1)').click()
+
+
+
 # Initialize Chrome object
 wd = webdriver.Chrome()
 wd.implicitly_wait(5)
@@ -121,28 +158,16 @@ wd.get('http://127.0.0.1:80')
 # else:
 #     print(wd.switch_to.alert.text)
 
-# UI-0101 || NOT resolve, CAN NOT ger text of list object
-# Find 'username' input box and input 'byh'
-username = wd.find_element(By.CSS_SELECTOR, 'input#username')
-username.clear()
-username.send_keys('byhy')
-
-# Find the password input box
-password = wd.find_element(By.CSS_SELECTOR, 'input#password')
-password.clear()
-password.send_keys('88888888')
-
-# Click '登陆‘ button
-wd.find_element(By.TAG_NAME, 'button').click()
-
-# Find the first 3 items in sidebar
-sidebar = wd.find_elements(By.CSS_SELECTOR, 'ul.sidebar-menu li')
-firs_3 = sidebar[1:4]
-target_list = ['客户', '药品', '订单']
-
-for item in firs_3:
-    print(item.get_attribute('innerText'))
-
+# UI-0101
+# login()
+# # Find the first 3 items in sidebar
+# sidebar = wd.find_elements(By.CSS_SELECTOR, 'ul.sidebar-menu li')
+# firs_3 = sidebar[1:4]
+# target_list = ['客户', '药品', '订单']
+#
+# for item in firs_3:
+#     print(item.get_attribute('innerText'))
+#
 # try:
 #     assert firs_3 == target_list
 #     print('UI-0101: Pass')
@@ -152,18 +177,7 @@ for item in firs_3:
 
 
 # # UI-0102
-# # Find 'username' input box and input 'byhy'
-# username = wd.find_element(By.CSS_SELECTOR, 'input#username')
-# username.clear()
-# username.send_keys('byhy')
-#
-# # Find the password input box
-# password = wd.find_element(By.CSS_SELECTOR, 'input#password')
-# password.clear()
-# password.send_keys('88888888')
-#
-# # Click '登陆‘ button
-# wd.find_element(By.TAG_NAME, 'button').click()
+# login()
 #
 # # Find '添加客户‘ button, and click
 # wd.find_element(By.CSS_SELECTOR, 'button > span.glyphicon').click()
@@ -195,18 +209,7 @@ for item in firs_3:
 #     print('UI-0102: Failed')
 #
 # # UI-0103
-# # Find 'username' input box and input 'byhy'
-# username = wd.find_element(By.CSS_SELECTOR, 'input#username')
-# username.clear()
-# username.send_keys('byhy')
-#
-# # Find the password input box
-# password = wd.find_element(By.CSS_SELECTOR, 'input#password')
-# password.clear()
-# password.send_keys('88888888')
-#
-# # Click '登陆‘ button
-# wd.find_element(By.TAG_NAME, 'button').click()
+# login()
 #
 # # Select search box and click, send keys '南京中医院'
 # search_box = wd.find_element(By.CSS_SELECTOR, 'div.input-group > input')
@@ -253,7 +256,7 @@ for item in firs_3:
 # # switch to medicine page
 # wd.get('http://127.0.0.1/mgr/#/medicines')
 #
-# # Click '添加客户'
+# # Click '添加药品'
 # wd.find_element(By.CSS_SELECTOR, '.col-lg-12 > button').click()
 #
 # # Find the '药品名称'
@@ -334,6 +337,49 @@ for item in firs_3:
 #     print('UI-0106: Pass')
 # except AssertionError:
 #     print('UI-0106: Failed')
+
+# UI-0107
+# Find 'username' input box and input 'byhy'
+username = wd.find_element(By.CSS_SELECTOR, 'input#username')
+username.clear()
+username.send_keys('byhy')
+
+# Find the password input box
+password = wd.find_element(By.CSS_SELECTOR, 'input#password')
+password.clear()
+password.send_keys('88888888')
+
+# Click '登陆‘ button
+wd.find_element(By.TAG_NAME, 'button').click()
+
+# Add medicines
+med_list = [
+    ['青霉素盒装1', 'YP-32342341', '青霉素注射液，每支15ml，20支装'],
+    ['青霉素盒装2', 'YP-32342342', '青霉素注射液，每支15ml，30支装'],
+    ['青霉素盒装3', 'YP-32342343', '青霉素注射液，每支15ml，40支装']
+            ]
+
+# Click '添加药品'
+wd.find_element(By.CSS_SELECTOR, 'a[href = "#/medicines"]').click()
+wd.find_element(By.CSS_SELECTOR, '.col-lg-12 > button').click()
+add_item(med_list)
+
+# Add customers
+cus_list = [
+    ['南京中医院1', '2551867851', '江苏省-南京市-秦淮区-汉中路-501'],
+    ['南京中医院2', '2551867852', '江苏省-南京市-秦淮区-汉中路-502'],
+    ['南京中医院3', '2551867853', '江苏省-南京市-秦淮区-汉中路-503']
+            ]
+
+
+# Find '添加客户‘ button, and click
+wd.find_element(By.CSS_SELECTOR, 'a[href = "#/customers"]').click()
+wd.find_element(By.CSS_SELECTOR, 'button > span.glyphicon').click()
+add_item(cus_list)
+
+# Add orders
+wd.find_element(By.CSS_SELECTOR, 'a[href = "#/orders"]').click()
+
 
 # quit
 wd.quit()
