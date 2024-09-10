@@ -1,6 +1,4 @@
-from selenium import webdriver
 from selenium.webdriver.common.by import By
-from pytest_UI.cfg.cfg import *
 from pytest_UI.lib.SMP_UI import SMP
 
 
@@ -11,4 +9,7 @@ def test_smp_login_001():
 
     nav = smp_ui.wd. find_elements(By. TAG_NAME, 'nav')
     assert nav != []
+
+
+
 
