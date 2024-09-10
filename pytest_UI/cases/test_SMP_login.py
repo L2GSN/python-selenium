@@ -13,7 +13,7 @@ def test_smp_login_001():
     wd.implicitly_wait(5)
 
     # get login address
-    wd.get(SMP_ADDRESS_LOGIN)
+    wd.get(SMP_LOGIN)
 
     # enter username and password
     wd.find_element(By.ID, 'username').send_keys('byhy')
@@ -27,3 +27,5 @@ def test_smp_login_001():
 
     assert nav != []
     wd.quit()
+
+
