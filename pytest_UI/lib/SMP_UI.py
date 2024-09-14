@@ -21,15 +21,17 @@ class SMP:
     def login(self, username, password):
         """input Username and password to login"""
 
-        time.sleep(1)
         # get login address
         self.wd.get(SMP_LOGIN)
+        time.sleep(1)
 
         if username is not None:
             self.wd.find_element(By.ID, 'username').send_keys(username)
+        time.sleep(1)
 
         if password is not None:
             self.wd.find_element(By.ID, 'password').send_keys(password)
+        time.sleep(1)
 
         # click button
         self.wd.find_element(By.TAG_NAME, 'button').click()
