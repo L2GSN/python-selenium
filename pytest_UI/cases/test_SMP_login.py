@@ -2,10 +2,7 @@ import time
 import pytest
 
 from selenium.webdriver.common.by import By
-from pytest_UI.lib.SMP_UI import SMP
-
-# Create a Chrome object
-smp_ui = SMP()
+from pytest_UI.lib.SMP_UI import smp_ui
 
 
 def test_smp_login_001():

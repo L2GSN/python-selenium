@@ -35,3 +35,6 @@ class SMP:
 
         # click button
         self.wd.find_element(By.TAG_NAME, 'button').click()
+
+
+smp_ui = SMP()
