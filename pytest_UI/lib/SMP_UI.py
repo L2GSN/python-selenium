@@ -51,7 +51,7 @@ class SMP:
 
         return device_models
 
-    def del_first_item(self) -> bool:
+    def del_first_device(self) -> bool:
         """delete added items, delete the first by default."""
 
         self.wd.implicitly_wait(0)

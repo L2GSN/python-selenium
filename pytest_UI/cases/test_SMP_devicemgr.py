@@ -19,8 +19,8 @@ def smp_signed():
 def del_added_devices():
 
     yield
-    print('** Delete added device model **')
-    smp_ui.del_first_item()
+    print('\n** Delete added device model **\n')
+    smp_ui.del_first_device()
 
 
 def test_smp_device_model_001(smp_signed, del_added_devices):
