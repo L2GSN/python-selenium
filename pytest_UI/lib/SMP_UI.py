@@ -36,5 +36,34 @@ class SMP:
         # click button
         self.wd.find_element(By.TAG_NAME, 'button').click()
 
+    def get_first_device(self):
+        time.sleep(1)
+
+        self.wd.implicitly_wait(0)
+        values = self.wd.find_elements(By.CSS_SELECTOR, 'field-value')
+        self.wd.implicitly_wait(5)
+
+        device_models = []
+        for idx, value in enumerate(values):
+            if (idx+1) % 3 == 0:
+                device_models.append(
+                    [values[idx-2].text, values[idx-1].text, values[idx].text])
+
+        return device_models
+
+    def del_first_item(self) -> bool:
+        """delete added items, delete the first by default."""
+
+        self.wd.implicitly_wait(0)
+        del_btn = self.wd.find_elements(
+            By.CSS_SELECTOR, '.result-list-item:first-child > .result-list-item-btn-bar > span:first-child')
+        self.wd.implicitly_wait(5)
+
+        if not del_btn:
+            return False
+
+        del_btn[0].click()
+        self.wd.switch_to.alert.accept()
+
 
 smp_ui = SMP()
