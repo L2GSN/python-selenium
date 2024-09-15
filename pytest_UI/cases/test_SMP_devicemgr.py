@@ -17,6 +17,8 @@ def smp_signed():
 
 @pytest.fixture()
 def del_added_devices():
+    print('\n** Delete all items **\n')
+    smp_ui.del_all_items()
 
     yield
     print('\n** Delete added device model **\n')

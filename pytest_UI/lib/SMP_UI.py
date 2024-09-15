@@ -1,5 +1,6 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
+from selenium.webdriver.remote.errorhandler import NoSuchElementException
 from pytest_UI.cfg.cfg import *
 import time
 
@@ -64,6 +65,23 @@ class SMP:
 
         del_btn[0].click()
         self.wd.switch_to.alert.accept()
+
+    def del_all_items(self):
+
+        while True:
+            try:
+                self.wd.implicitly_wait(0)
+                del_btn = self.wd.find_element(
+                    By.CSS_SELECTOR, '.result-list-item:first-child > .result-list-item-btn-bar > span:first-child')
+                self.wd.implicitly_wait(5)
+
+                del_btn.click()
+                self.wd.switch_to.alert.accept()
+                time.sleep(0.1)
+
+            except NoSuchElementException:
+
+                return
 
 
 smp_ui = SMP()
