@@ -25,13 +25,20 @@ def del_added_devices():
     smp_ui.del_first_device()
 
 
-def test_smp_device_model_001(smp_signed, del_added_devices):
+@pytest.mark.parametrize('d_type, d_model, d_desc', [
+    ('存储柜', 'elife-canbinlocker-g22-10-20-40', '南京e生活存储柜-10大20中40小'),
+    ('存储柜', '字'*100, '南京e生活存储柜-10大20中40小'),
+    ('电瓶车充电站', 'bokpower-charger-g22-220v450w', '杭州bok 2022款450瓦 电瓶车充电站'),
+    ('洗车站', 'njcw-carwasher-g22-2s', '南京e生活2022款洗车机 2个洗车位'),
+    ('汽车充电站', 'yixun-charger-g22-220v7kw', '南京易迅能源2022款7千瓦汽车充电站'),
+])
+def test_smp_device_model_001_301(d_type, d_model, d_desc, smp_signed, del_added_devices):
 
-    smp_ui.add_device_model('存储柜', 'elife-canbinlocker-g22-10-20-40', '南京e生活存储柜-10大20中40小')
+    smp_ui.add_device_model(d_type, d_model, d_desc)
 
     dms = smp_ui.get_first_device()
 
     try:
-        assert dms == ['存储柜', 'elife-canbinlocker-g22-10-20-40', '南京e生活存储柜-10大20中40小']
+        assert dms == [d_type, d_model, d_desc]
     except Exception as e:
         print(e)
