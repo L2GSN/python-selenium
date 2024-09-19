@@ -1,5 +1,6 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support.select import Select
 from selenium.webdriver.remote.errorhandler import NoSuchElementException
 from pytest_UI.cfg.cfg import *
 import time
@@ -82,6 +83,25 @@ class SMP:
             except NoSuchElementException:
 
                 return
+
+    def add_device_model(self, d_type, d_model, d_desc):
+
+        add_btn = self.wd.find_element(By.CSS_SELECTOR, '.add-one-area > span')
+        if add_btn.text == '添加':
+            add_btn.click()
+
+        device = Select(self.wd.find_element(By.ID, 'device-type'))
+        device.select_by_visible_text(d_type)
+
+        ele = self.wd.find_element(By.ID, 'device-model')
+        ele.clear()
+        ele.send_keys(d_model)
+
+        ele = self.wd.find_element(By.ID, 'device-model-desc')
+        ele.clear()
+        ele.send_keys(d_desc)
+
+        self.wd.find_element(By.CSS_SELECTOR, '.add-one-submit-btn-div > .btn').click()
 
 
 smp_ui = SMP()

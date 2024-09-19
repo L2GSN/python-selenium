@@ -27,22 +27,7 @@ def del_added_devices():
 
 def test_smp_device_model_001(smp_signed, del_added_devices):
 
-    add_btn = smp_ui.wd.find_element(By.CSS_SELECTOR, '.add-one-area > span')
-    if add_btn.text == '添加':
-        add_btn.click()
-
-    device = Select(smp_ui.wd.find_element(By.ID, 'device-type'))
-    device.select_by_visible_text('存储柜')
-
-    ele = smp_ui.wd.find_element(By.ID, 'device-model')
-    ele.clear()
-    ele.send_keys('elife-canbinlocker-g22-10-20-40')
-
-    ele = smp_ui.wd.find_element(By.ID, 'device-model-desc')
-    ele.clear()
-    ele.send_keys('南京e生活存储柜-10大20中40小')
-
-    smp_ui.wd.find_element(By.CSS_SELECTOR, '.add-one-submit-btn-div > .btn').click()
+    smp_ui.add_device_model('存储柜', 'elife-canbinlocker-g22-10-20-40', '南京e生活存储柜-10大20中40小')
 
     dms = smp_ui.get_first_device()
 
