@@ -80,3 +80,19 @@ def test_smp_device_model_501(smp_signed, exist_charger):
         assert update == ['电瓶车充电站', 'Test, update description', 'Test, update model']
     except Exception as e:
         print(e)
+
+
+def test_smp_device_model_601(smp_signed, exist_charger):
+
+    btn_del = smp_ui.wd.find_element(By.CSS_SELECTOR, '.result-list-item:first-child .btn-no-border:nth-child(2)')
+
+    if btn_del.text == '删除':
+        btn_del.click()
+        smp_ui.wd.switch_to.alert.accept()
+
+    update = smp_ui.get_first_device()
+
+    try:
+        assert update == []
+    except Exception as e:
+        print(e)
