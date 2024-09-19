@@ -42,3 +42,41 @@ def test_smp_device_model_001_301(d_type, d_model, d_desc, smp_signed, del_added
         assert dms == [d_type, d_model, d_desc]
     except Exception as e:
         print(e)
+
+
+@pytest.fixture()
+def exist_charger():
+    print('\n** delete all items, then add a charger station **\n')
+    smp_ui.del_all_items()
+    smp_ui.add_device_model('电瓶车充电站', 'bokpower-charger-g22-220v450w', '杭州bok 2022款450瓦 电瓶车充电站')
+    time.sleep(0.1)
+
+    yield
+
+    print('\n** delete the just added item **\n')
+    smp_ui.del_first_device()
+
+
+def test_smp_device_model_501(smp_signed, exist_charger):
+
+    modify = smp_ui.wd.find_element(By.CSS_SELECTOR, '.result-list-item:first-child .btn-no-border:nth-child(2)')
+
+    if modify.text == '修改':
+        modify.click()
+
+    ele = smp_ui.wd.find_element(By.CSS_SELECTOR, '.result-list-item .field:nth-child(2) >.input-xl:nth-child(2)')
+    ele.clear()
+    ele.send_keys('Test, update model')
+
+    ele = smp_ui.wd.find_element(By.CSS_SELECTOR, '.result-list-item .field:nth-child(3) >.input-xl:nth-child(2)')
+    ele.clear()
+    ele.send_keys('Test, update description')
+
+    smp_ui.wd.find_element(By.CSS_SELECTOR, '.result-list-item:first-child .btn-no-border:nth-child(1)').click()
+
+    update = smp_ui.get_first_device()
+
+    try:
+        assert update == ['电瓶车充电站', 'Test, update description', 'Test, update model']
+    except Exception as e:
+        print(e)
