@@ -1,7 +1,6 @@
 import time
 import pytest
 
-from selenium.webdriver.support.ui import Select
 from selenium.webdriver.common.by import By
 from pytest_UI.lib.SMP_UI import smp_ui
 from pytest_UI.cfg.cfg import *
@@ -13,6 +12,7 @@ def smp_signed():
     smp_ui.wd.get(SMP_DEVICE_MGR)
 
     yield
+    smp_ui.wd.quit()
 
 
 @pytest.fixture()
