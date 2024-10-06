@@ -8,7 +8,10 @@ from pytest_UI.cfg.cfg import *
 
 @pytest.fixture(scope='module')
 def smp_signed():
+    print("\n ** Initializing: log in as super manager ** \n")
     smp_ui.login('byhy', 'sdfsdf')
+
+    print("\n ** Initializing: switch to device manage page ** \n")
     smp_ui.wd.get(SMP_DEVICE_MGR)
 
     yield
