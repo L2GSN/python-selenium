@@ -10,21 +10,18 @@ from pytest_UI.cfg.cfg import *
 def smp_signed():
     print("\n ** Initializing: log in as super manager ** \n")
     smp_ui.login('byhy', 'sdfsdf')
-
-    print("\n ** Initializing: switch to device manage page ** \n")
     smp_ui.wd.get(SMP_DEVICE_MGR)
 
     yield
+    print("\n ** All cases are completed, quit ** \n")
     smp_ui.wd.quit()
 
 
 @pytest.fixture()
 def del_added_devices():
-    print('\n** Delete all items **\n')
     smp_ui.del_all_items()
 
     yield
-    print('\n** Delete added device model **\n')
     smp_ui.del_first_device()
 
 
@@ -49,14 +46,12 @@ def test_smp_device_model_001_301(d_type, d_model, d_desc, smp_signed, del_added
 
 @pytest.fixture()
 def exist_charger():
-    print('\n** delete all items, then add a charger station **\n')
     smp_ui.del_all_items()
     smp_ui.add_device_model('电瓶车充电站', 'bokpower-charger-g22-220v450w', '杭州bok 2022款450瓦 电瓶车充电站')
     time.sleep(0.1)
 
     yield
 
-    print('\n** delete the just added item **\n')
     smp_ui.del_first_device()
 
 
