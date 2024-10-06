@@ -25,21 +25,21 @@ class SMP:
 
         # get login address
         self.wd.get(SMP_LOGIN)
-        time.sleep(1)
+        time.sleep(0.1)
 
         if username is not None:
             self.wd.find_element(By.ID, 'username').send_keys(username)
-        time.sleep(1)
+        time.sleep(0.1)
 
         if password is not None:
             self.wd.find_element(By.ID, 'password').send_keys(password)
-        time.sleep(1)
+        time.sleep(0.1)
 
         # click button
         self.wd.find_element(By.TAG_NAME, 'button').click()
 
     def get_first_device(self):
-        time.sleep(1)
+        time.sleep(0.1)
 
         self.wd.implicitly_wait(0)
         values = self.wd.find_elements(By.CSS_SELECTOR, 'field-value')
